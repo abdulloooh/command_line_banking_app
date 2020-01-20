@@ -8,15 +8,14 @@ def treat_input(inp):
     elif inp =="3": terminate()
     else:
         print("Request not clear, terminating...") #put delay here later
-        sleep(3)
+        sleep(1)
         terminate()
 
 def start():
     # default screen
     start_option = input("""Welcome Dear Customer,
                                             Press 1: create account
-                                            Press 2: log in 
-                                            press 3: terminate\n>>""")
+                                            Press 2: log in\n>>""")
     treat_input(start_option)
 
 def create_account():
@@ -35,7 +34,7 @@ def create_account():
         # bad_id = ""  #re-assign bad_id for next session
     #if id is new
     print("Account creating....")
-    sleep(3)
+    sleep(1)
     id_pwd[user_id] = pwd #initialise user
     id_acc_bal[user_id] = 0.0 #initialise acct bal to zero for new user
     print("Account created succesfully")
@@ -57,7 +56,7 @@ def login():
         # print("user dey oo")
         if(id_pwd[user_id] == pwd):
             print("signing in... Please wait")
-            sleep(3)
+            sleep(1)
             transaction(user_id)
         else: 
             print("""
@@ -98,7 +97,7 @@ def transaction(user):
 
 def check_bal(user):
     print("fetching balance...")
-    sleep(3)
+    sleep(1)
     print("Your balance is ", str(id_acc_bal[user]))
     if(input("Press any key to go back: >>") == '0' ) : transaction(user)
     transaction(user)
@@ -110,7 +109,7 @@ def deposit_or_withdraw(user,option):  #use one function for deposit and withdra
         if option == 'dep': depos = int(input(">>"))  #var depos for deposit amount
         elif option == 'withd': withdraw = int(input(">>"))     #var withdraw for withdrawal amount
     except ValueError:
-        print("Integer values only are allowed")
+        print("Only whole numbers are allowed")
         if option == "dep": deposit_or_withdraw(user, 'dep')
         elif option == "withd": deposit_or_withdraw(user, 'withd')
     except:
@@ -120,7 +119,7 @@ def deposit_or_withdraw(user,option):  #use one function for deposit and withdra
     #top up acct
     if option == 'dep': 
         print("Processing your deposit...")
-        sleep(3)
+        sleep(1)
         id_acc_bal[user] = id_acc_bal[user] + depos
     elif option == 'withd': 
         if id_acc_bal[user] - withdraw < 0:  #check if user has enough money to withdraw
@@ -128,7 +127,7 @@ def deposit_or_withdraw(user,option):  #use one function for deposit and withdra
             if(input("Press any key to go back: >>") == '0') : transaction(user)   #handle any key later simply
             transaction(user)
         print("Processing your withdrawal...")
-        sleep(3)
+        sleep(1)
         id_acc_bal[user] = id_acc_bal[user] - withdraw
     #feedback
     if option =='dep': print(f"{depos} has been deposited into your account and your new balance is {id_acc_bal[user]}")
@@ -150,7 +149,7 @@ def transfer(user):
             if(what_next == 1): transfer(user)
             transaction(user)
     except ValueError:
-        print("Integer only expected, try again")
+        print("Whole numbers only expected, try again")
         transfer(user)
     except:
         print("Unexpected input")
@@ -160,14 +159,14 @@ def transfer(user):
     receiver = input(">>")
     #look up user
     while (receiver not in id_pwd or receiver == user):
-        if receiver == user: print("There is no point in transferring to your same account, try another")
-        else:print("Receiver account not registered")
+        if receiver == user: print("There is no point in transferring to yourself, try another")
+        else:print("Receiver account not recognised")
         print("Enter correct email / Id of the receiver or 4 to cancel transfer")
         receiver = input(">>") 
         if receiver == "4" : transaction(user)
     #top up and deduct
     print("Processing your transfer...")
-    sleep(3)
+    sleep(1)
     id_acc_bal[user] -= amount
     id_acc_bal[receiver] += amount
     #feedback
@@ -178,7 +177,7 @@ def transfer(user):
     
 def terminate():
     print("terminating...")
-    sleep(3)
+    sleep(1)
     print("Thanks for banking with us, Good Bye")
     # Introduce delay later here
     start()
